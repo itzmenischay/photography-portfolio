@@ -11,7 +11,7 @@ const Navbar = () => {
       className="navbar absolute top-6 left-0 w-full z-50 flex flex-row p-4 justify-around items-center text-white"
     >
       {/* Logo */}
-      <div className="logo font-bold text-3xl px-10">Our Studio</div>
+      <div className="logo font-bold text-3xl px-10"><Link to="/">Our Studio</Link></div>
 
       {/* Menu */}
       <div className="menu">
@@ -51,19 +51,29 @@ const Navbar = () => {
             hover:before:scale-x-100">
             <Link to="/services">Our Services</Link>
           </li>
+          <li className="relative px-6 cursor-pointer
+            before:content-[''] before:absolute before:-bottom-[6px] before:left-1/2 
+            before:-translate-x-1/2 before:w-[60%] before:h-[1px] before:bg-white 
+            before:scale-x-0 before:origin-center before:transition-transform before:duration-300 
+            hover:before:scale-x-100">
+            <Link to="/contact">Contact Us</Link>
+          </li>
         </ul>
       </div>
 
       {/* CTA Button */}
       <div className="estimate-button">
-        <motion.button
+        {/* <motion.button
           whileHover={{ scale: 0.96 }}
           transition={{ type: "tween", duration: 0.3 }}
           className="inline-flex items-center justify-center h-[45px] px-6 rounded-full
                     font-bold text-black text-lg bg-white  leading-none cursor-pointer"
         >
           <Link to="/estimate">Estimate your Event</Link>
-        </motion.button>
+        </motion.button> */}
+        <button className="flex justify-center items-center font-semibold text-white text-md h-[45px] px-6 rounded-full cursor-pointer transition-all duration-500 transform hover:scale-95 bg-gradient-to-r from-[#ff8d37] via-[#ff08ef] to-[#7300ff] bg-[length:200%] bg-right hover:bg-left">
+          <Link to="/estimate">Estimate your Event</Link>
+        </button>
       </div>
     </motion.nav>
   )

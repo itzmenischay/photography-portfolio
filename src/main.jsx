@@ -9,6 +9,7 @@ import AboutUs from './components/AboutUs.jsx'
 import WhyUs from './components/WhyUs.jsx'
 import Portfolio from './components/Portfolio.jsx'
 import Services from './components/Services.jsx'
+import ContactUs from './components/ContactUs.jsx'
 import Estimate from './components/Estimate.jsx'
 import NotFound from './components/NotFound.jsx'
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/services",
         element: <Services/>
+      },
+      {
+        path: "/contact",
+        element: <ContactUs/>
       },
       {
         path: "/estimate",

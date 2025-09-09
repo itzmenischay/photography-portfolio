@@ -3,20 +3,22 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 
 // Image imports
-import aboutcover from ".././assets/aboutpage/aboutcover.jpg"
-import bts1 from ".././assets/aboutpage/bts1.jpg"
-import wedding1 from ".././assets/aboutpage/wedding1.jpg"
-import candid1 from ".././assets/aboutpage/candid1.jpg"
-import bts2 from ".././assets/aboutpage/bts2.jpg"
-import candid2 from ".././assets/aboutpage/candid2.jpg"
-import wedding2 from ".././assets/aboutpage/wedding2.jpg"
-import member1 from ".././assets/aboutpage/member1.jpg"
-import member2 from ".././assets/aboutpage/member2.jpg"
-import member3 from ".././assets/aboutpage/member3.jpg"
-import member4 from ".././assets/aboutpage/member4.jpg"
-import member5 from ".././assets/aboutpage/member5.jpg"
-import member6 from ".././assets/aboutpage/member6.jpg"
+import aboutcover from ".././assets/aboutpage/aboutcover.webp"
+import bts1 from ".././assets/aboutpage/bts1.webp"
+import wedding1 from ".././assets/aboutpage/wedding1.webp"
+import candid1 from ".././assets/aboutpage/candid1.webp"
+import bts2 from ".././assets/aboutpage/bts2.webp"
+import candid2 from ".././assets/aboutpage/candid2.webp"
+import bride2 from ".././assets/aboutpage/bride2.webp"
+import bride1 from ".././assets/aboutpage/bride1.webp"
+import member1 from ".././assets/aboutpage/member1.webp"
+import member2 from ".././assets/aboutpage/member2.webp"
+import member3 from ".././assets/aboutpage/member3.webp"
+import member4 from ".././assets/aboutpage/member4.webp"
+import member5 from ".././assets/aboutpage/member5.webp"
+import member6 from ".././assets/aboutpage/member6.webp"
 import arrowRight from "../assets/arrow-right.png"
+import Footer from "./Footer";
 
 // Team membets data inside array
 const teamMembers = [
@@ -55,18 +57,18 @@ export default function About() {
         {/* Hero Text */}
         <div className="relative top-30 z-10 flex h-full flex-col items-center justify-center text-center text-white">
           <motion.h1
-            initial={{ opacity: 0, }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 1 }}
-            className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1}}
+            transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
+            className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg"
           >
             Get to Know Us
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 1 }}
-            className="mt-4 text-lg md:text-xl max-w-xl"
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-4 text-lg md:text-xl max-w-xl drop-shadow-md"
           >
             Every frame tells a story — and we’re here to tell yours.
           </motion.p>
@@ -74,29 +76,30 @@ export default function About() {
       </section>
 
       {/* Story Section: YOUR HAPPINESS IS ENOUGH FOR A COMPLETE STORY */}
-      <section className="max-w-7xl mx-auto py-20 px-6">
+      <section className="max-w-7xl mx-auto py-20 px-6 overflow-x-hidden"> {/* Added overflow-x-hidden to prevent scrollbars during animation */}
         <div className="grid md:grid-cols-12 gap-8 items-center">
-          {/* Left Column: Asymmetric Image Grid */}
-          <div className="md:col-span-7 grid grid-cols-2 grid-rows-2 gap-4">
-            <img
-              src={wedding2} // Replace with happy/candid images
-              alt="Emotional Moments"
-              className="rounded-xl object-cover h-full w-full row-span-2"
-            />
-            <img
-              src={bts2} // Replace with other candid images
-              alt="Wedding Moments"
-              className="rounded-xl object-cover h-full w-full"
-            />
-            <img
-              src={candid2} // Replace with another happy moment
-              alt="Smiles and laughter"
-              className="rounded-xl object-cover h-full w-full"
-            />
-          </div>
+          {/* Left Column: Asymmetric Image Grid - Fades in from LEFT */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="md:col-span-7 grid grid-cols-2 grid-rows-2 gap-4 h-[550px]"
+          >
+            <img src={bride2} alt="Emotional Moments" className="rounded-xl object-cover h-full w-full" />
+            <img src={bts2} alt="Wedding Moments" className="rounded-xl object-cover h-full w-full" />
+            <img src={candid2} alt="Smiles and laughter" className="rounded-xl object-cover h-full w-full" />
+            <img src={bride1} alt="Emotional Moments" className="rounded-xl object-cover h-full w-full" />
+          </motion.div>
 
-          {/* Right Column: Text */}
-          <div className="md:col-span-5 flex flex-col justify-center space-y-6 text-right">
+          {/* Right Column: Text - Fades in from RIGHT */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="md:col-span-5 flex flex-col justify-center space-y-6 text-left"
+          >
             <h2 className="text-5xl md:text-6xl font-bold">
               Your Moments, Our Masterpiece
             </h2>
@@ -112,16 +115,22 @@ export default function About() {
             <p className="text-lg leading-relaxed">
               Let us tell your story — one genuine smile at a time.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* About Content Section */}
-      <section className="max-w-7xl mx-auto py-20 px-6">
-        <div className="grid md:grid-cols-12 gap-8">
-          {/* Left Column: Text */}
-          <div className="md:col-span-5 flex flex-col justify-center space-y-6">
-            <h2 className="text-6xl font-bold">Our Story</h2>
+      <section className="max-w-7xl mx-auto py-20 px-6 overflow-x-hidden"> {/* Added overflow-x-hidden */}
+        <div className="grid md:grid-cols-12 gap-8 items-center">
+          {/* Left Column: Text - Fades in from LEFT */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="md:col-span-5 flex flex-col justify-center space-y-6 md:text-right"
+          >
+            <h2 className="text-5xl md:text-6xl font-bold">Our Story</h2>
             <p className="text-lg leading-relaxed">
               We are a passionate team of photographers and filmmakers dedicated to
               turning your moments into timeless memories. Whether it’s a wedding,
@@ -133,10 +142,16 @@ export default function About() {
               ensuring every shot feels cinematic and meaningful. Your story deserves
               more than just pictures — it deserves to be remembered forever.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Asymmetric Grid of Images */}
-          <div className="md:col-span-7 grid grid-cols-2 grid-rows-2 gap-4">
+          {/* Right Column: Asymmetric Grid of Images - Fades in from RIGHT */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="md:col-span-7 grid grid-cols-2 grid-rows-2 gap-4 h-[550px]"
+          >
             <img
               src={bts1}
               alt="Behind the scenes"
@@ -152,7 +167,7 @@ export default function About() {
               alt="Candid moments"
               className="rounded-xl object-cover h-full w-full"
             />
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -203,6 +218,7 @@ export default function About() {
           </div>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 }
