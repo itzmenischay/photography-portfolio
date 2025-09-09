@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <motion.nav  
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6, duration: 1 }}
-      className="navbar absolute top-0 left-0 w-full z-10 flex flex-row p-4 justify-around items-center text-white"
+      className="navbar absolute top-6 left-0 w-full z-50 flex flex-row p-4 justify-around items-center text-white"
     >
       {/* Logo */}
-      <div className="logo font-bold text-2xl px-10">Our Studio</div>
+      <div className="logo font-bold text-3xl px-10">Our Studio</div>
 
       {/* Menu */}
       <div className="menu">

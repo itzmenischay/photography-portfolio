@@ -1,14 +1,14 @@
+import React from "react";
 import { motion } from "framer-motion";
-import Navbar from "./components/Navbar";
 
 
 // Image imports
-import cover from "./assets/cover1.jpg";
-import weddingImg from "./assets/wedding.jpg";
-import bridalImg from "./assets/bridal1.jpg";
-import preweddingImg from "./assets/prewedding.jpg";
+import herocover from "./assets/landingpage/herocover1.jpg";
+import weddingImg from "./assets/landingpage/wedding.jpg";
+import bridalImg from "./assets/landingpage/bridal1.jpg";
+import preweddingImg from "./assets/landingpage/prewedding.jpg";
 
-export default function Home() {
+export default function App() {
   return (
     <div className="w-full">
 
@@ -16,32 +16,27 @@ export default function Home() {
       <section className="relative h-[70vh] w-full">
         
         <img
-          src={cover}
+          src={herocover}
           alt="Hero Background"
           className="absolute inset-0 h-full w-full object-cover"
         />
         {/* Overlay for readability */}
         <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Navbar */}
-        <div className="absolute top-0 left-0 w-full">
-          <Navbar />
-        </div>
-
         {/* Centered Content */}
         <div className="relative top-30 z-10 flex h-full flex-col items-center justify-center text-center text-white">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-4xl md:text-6xl font-bold"
+            transition={{ delay: 0.6, duration: 1 }}
+            className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-2xl"
           >
             Welcome to Our Studio
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
+            transition={{ delay: 0.9, duration: 1 }}
             className="mt-4 text-lg md:text-xl max-w-xl"
           >
             Capturing Moments, Creating Stories

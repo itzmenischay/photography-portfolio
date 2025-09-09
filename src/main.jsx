@@ -16,11 +16,13 @@ import NotFound from './components/NotFound.jsx'
 import './index.css'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import About from './components/AboutUs.jsx'
+import Navbar from './components/Navbar.jsx'
 
 function RootLayout(){
   return (
     <>
       <ScrollToTop/>
+      <Navbar/>
       <Outlet />
     </>
   )
@@ -63,7 +65,7 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  // </StrictMode>,
 )
