@@ -1,20 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence  } from "framer-motion";
+import { X } from "lucide-react";
 
-// --- Placeholder Images ---
-// The original local image paths were causing errors. 
-// They have been replaced with placeholder URLs.
-// const herocover = "https://placehold.co/1920x1080/a78bfa/ffffff?text=Hero+Cover";
-// const weddingImg = "https://placehold.co/600x400/818cf8/ffffff?text=Wedding";
-// const bridalImg = "https://placehold.co/600x400/f472b6/ffffff?text=Bridal";
-// const preweddingImg = "https://placehold.co/600x400/60a5fa/ffffff?text=Pre-Wedding";
-// const story1 = "https://placehold.co/500x500/fbbf24/ffffff?text=Story+1";
-// const story2 = "https://placehold.co/500x500/a3e635/ffffff?text=Story+2";
-// const story3 = "https://placehold.co/500x500/34d399/ffffff?text=Story+3";
-// const story4 = "https://placehold.co/500x500/22d3ee/ffffff?text=Story+4";
-// const story5 = "https://placehold.co/500x500/f87171/ffffff?text=Story+5";
-// const story6 = "https://placehold.co/500x500/fb923c/ffffff?text=Story+6";
 
+// Image imports
 import herocover from "./assets/landingpage/herocover1.webp"
 import weddingImg from "./assets/landingpage/wedding.webp"
 import bridalImg from "./assets/landingpage/bridal1.webp"
@@ -27,8 +17,19 @@ import story5 from "./assets/landingpage/story5.webp"
 import story6 from "./assets/landingpage/story6.webp"
 import Footer from "./components/Footer";
 
+// Icon imports
+import topRight from "./assets/top-right.png"
+
 
 export default function App() {
+  const [activeItem, setActiveItem] = useState(null);
+
+  const works = [
+    { title: "Wedding", img: weddingImg },
+    { title: "Pre-Wedding", img: preweddingImg },
+    { title: "Bridal", img: bridalImg },
+  ];
+
   return (
     <div className="w-full bg-white">
 
@@ -132,52 +133,124 @@ export default function App() {
 
       {/* SECTION 4: OUR WORKS (Animates on Scroll) */}
       <section className="py-16 bg-gray-50 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="text-3xl font-bold mb-10"
-        >
-          Our Works
-        </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-          {[
-            { title: "Wedding", img: weddingImg },
-            { title: "Pre-Wedding", img: preweddingImg },
-            { title: "Bridal", img: bridalImg }
-          ].map((item, index) => (
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+        className="text-3xl font-bold mb-10"
+      >
+        Our Works
+      </motion.h2>
+
+      {/* Grid of cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+        {works.map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.05 }}
+            animate={
+              activeItem?.title === item.title
+                ? { rotateY: 90, opacity: 0 }
+                : { rotateY: 0, opacity: 1 }
+            }
+            transition={{
+              duration: 0.6,
+              ease: [0.4, 0, 0.2, 1],
+              delay: index * 0.15,
+            }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="relative group overflow-hidden rounded-xl shadow-md cursor-pointer"
+            onClick={() => setActiveItem(item)}
+            style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
+          >
+            <img
+              src={item.img}
+              alt={item.title}
+              className="h-64 w-full object-cover group-hover:brightness-110 transition-all duration-300"
+            />
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-2xl font-bold">
+              {item.title}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Explore Button */}
+      <motion.button
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        whileHover={{ scale: 0.96 }}
+        className="mt-12 inline-flex items-center justify-center h-[45px] px-6 py-3 rounded-full font-semibold text-white bg-black leading-none cursor-pointer"
+      >
+        Explore More Works <span className="pl-2"><img src={topRight} alt="" width={12} style={{ filter: "invert(1)"}}/></span>
+      </motion.button>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {activeItem && (
+          <>
+            {/* Backdrop */}
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
-              viewport={{ once: true, amount: 0.3 }}
-              className="relative group overflow-hidden rounded-xl shadow-md cursor-pointer"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setActiveItem(null)}
+            />
+
+            {/* Modal */}
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              initial={{ rotateY: 90 }}
+              animate={{
+                rotateY: 0,
+                transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+              }}
+              exit={{
+                rotateY: 90,
+                transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+              }}
+              style={{
+                transformStyle: "preserve-3d",
+                perspective: "1000px",
+              }}
             >
-              <img
-                src={item.img}
-                alt={item.title}
-                className="h-64 w-full object-cover group-hover:brightness-110 transition-all duration-300"
-              />
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-2xl font-bold">
-                {item.title}
+              <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg relative overflow-hidden">
+                <motion.button
+                  onClick={() => setActiveItem(null)}
+                  className="absolute top-4 right-4 p-2 rounded-lg bg-black/30 hover:bg-black/50 transition-colors duration-200"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <X className="w-5 h-5 text-white" />
+                </motion.button>
+
+                <img
+                  src={activeItem.img}
+                  alt={activeItem.title}
+                  className="w-full h-[400px] object-cover"
+                />
+                <div className="p-6 text-left">
+                  <h2 className="text-2xl font-bold mb-2">
+                    {activeItem.title}
+                  </h2>
+                  <p className="text-gray-600">
+                    This is a detailed showcase of our {activeItem.title} work.
+                    We captured timeless moments with precision and artistry.
+                  </p>
+                </div>
               </div>
             </motion.div>
-          ))}
-        </div>
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          whileHover={{ scale: 0.96 }}
-          className="mt-12 inline-flex items-center justify-center h-[45px] px-6 py-3 rounded-full font-semibold text-white bg-black leading-none cursor-pointer"
-        >
-          Explore More Works
-        </motion.button>
-      </section>
+          </>
+        )}
+      </AnimatePresence>
+    </section>
 
       {/* SECTION 5: TESTIMONIALS (Animates on Scroll) */}
       <section className="py-16 bg-white text-center mb-4">

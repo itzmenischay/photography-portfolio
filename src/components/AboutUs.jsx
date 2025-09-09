@@ -76,14 +76,21 @@ export default function About() {
       </section>
 
       {/* Story Section: YOUR HAPPINESS IS ENOUGH FOR A COMPLETE STORY */}
-      <section className="max-w-7xl mx-auto py-20 px-6 overflow-x-hidden"> {/* Added overflow-x-hidden to prevent scrollbars during animation */}
-        <div className="grid md:grid-cols-12 gap-8 items-center">
-          {/* Left Column: Asymmetric Image Grid - Fades in from LEFT */}
+      <section className="max-w-7xl mx-auto py-20 px-6 overflow-x-hidden">
+        {/* The parent grid is now the main motion component that triggers the animation */}
+        <motion.div 
+          className="grid md:grid-cols-12 gap-8 items-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ staggerChildren: 0 }} // Ensures children animate simultaneously
+        >
+          {/* Left Column: It now inherits the animation trigger from its parent */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            variants={{
+              hidden: { opacity: 0, x: -50 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } }
+            }}
             className="md:col-span-7 grid grid-cols-2 grid-rows-2 gap-4 h-[550px]"
           >
             <img src={bride2} alt="Emotional Moments" className="rounded-xl object-cover h-full w-full" />
@@ -92,12 +99,12 @@ export default function About() {
             <img src={bride1} alt="Emotional Moments" className="rounded-xl object-cover h-full w-full" />
           </motion.div>
 
-          {/* Right Column: Text - Fades in from RIGHT */}
+          {/* Right Column: It also inherits the same trigger */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            variants={{
+              hidden: { opacity: 0, x: 50 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } }
+            }}
             className="md:col-span-5 flex flex-col justify-center space-y-6 text-left"
           >
             <h2 className="text-5xl md:text-6xl font-bold">
@@ -116,18 +123,25 @@ export default function About() {
               Let us tell your story — one genuine smile at a time.
             </p>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* About Content Section */}
-      <section className="max-w-7xl mx-auto py-20 px-6 overflow-x-hidden"> {/* Added overflow-x-hidden */}
-        <div className="grid md:grid-cols-12 gap-8 items-center">
-          {/* Left Column: Text - Fades in from LEFT */}
+      <section className="max-w-7xl mx-auto py-20 px-6 overflow-x-hidden">
+        {/* The parent grid is now the main motion component that triggers the animation */}
+        <motion.div
+          className="grid md:grid-cols-12 gap-8 items-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ staggerChildren: 0 }} // Ensures children animate simultaneously
+        >
+          {/* Left Column: Text - Inherits animation trigger from its parent */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            variants={{
+              hidden: { opacity: 0, x: -50 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } }
+            }}
             className="md:col-span-5 flex flex-col justify-center space-y-6 md:text-right"
           >
             <h2 className="text-5xl md:text-6xl font-bold">Our Story</h2>
@@ -144,12 +158,12 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Right Column: Asymmetric Grid of Images - Fades in from RIGHT */}
+          {/* Right Column: Images - Also inherits the same trigger */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            variants={{
+              hidden: { opacity: 0, x: 50 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } }
+            }}
             className="md:col-span-7 grid grid-cols-2 grid-rows-2 gap-4 h-[550px]"
           >
             <img
@@ -168,7 +182,7 @@ export default function About() {
               className="rounded-xl object-cover h-full w-full"
             />
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Meet our team section */}
