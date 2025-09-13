@@ -1,7 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence  } from "framer-motion";
 import { X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 // Image imports
@@ -19,21 +20,48 @@ import Footer from "./components/Footer";
 
 // Icon imports
 import topRight from "./assets/top-right.png"
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 
 export default function App() {
-  const [activeItem, setActiveItem] = useState(null);
 
+  const MotionLink = motion(Link);
+
+  // Functionality Our Works Section
+  const [activeItem, setActiveItem] = useState(null);
   const works = [
     { title: "Wedding", img: weddingImg },
     { title: "Pre-Wedding", img: preweddingImg },
     { title: "Bridal", img: bridalImg },
   ];
 
+  // Functionality Testimonials Section
+  const scrollRef = useRef(null);
+
+  const testimonials = [
+    { id: 1, name: "Aarav Mehta", img: "https://placehold.co/100x100/fecaca/881337?text=AM", feedback: "They captured our wedding beautifully. Loved every moment!" },
+    { id: 2, name: "Sanya Kapoor", img: "https://placehold.co/100x100/a5b4fc/1e1b4b?text=SK", feedback: "Professional and creative. Highly recommended." },
+    { id: 3, name: "Raj Sharma", img: "https://placehold.co/100x100/99f6e4/042f2e?text=RS", feedback: "Made our event memorable with stunning visuals." },
+    { id: 4, name: "Isha Gupta", img: "https://placehold.co/100x100/fef08a/78350f?text=IG", feedback: "Brilliant team, very easy to work with." },
+    { id: 5, name: "Kabir Singh", img: "https://placehold.co/100x100/fbcfe8/831843?text=KS", feedback: "Captured candid moments perfectly. Amazing experience!" },
+    { id: 6, name: "Nikita Rao", img: "https://placehold.co/100x100/d9f99d/365314?text=NR", feedback: "Loved their attention to detail and creativity." },
+    { id: 7, name: "Aditya Verma", img: "https://placehold.co/100x100/bae6fd/0c4a6e?text=AV", feedback: "Fantastic service and great results. Will hire again." },
+    { id: 8, name: "Priya Nair", img: "https://placehold.co/100x100/ddd6fe/3730a3?text=PN", feedback: "Made our special day unforgettable!" },
+  ];
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -300 : 300,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div className="w-full bg-white">
 
-      {/* SECTION 1: HERO (Animates on Page Load) */}
+      {/* SECTION 1: HERO */}
       <section className="relative h-[70vh] w-full">
         <img
           src={herocover}
@@ -133,64 +161,69 @@ export default function App() {
 
       {/* SECTION 4: OUR WORKS (Animates on Scroll) */}
       <section className="py-16 bg-gray-50 text-center">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="text-3xl font-bold mb-10"
-      >
-        Our Works
-      </motion.h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className="text-3xl font-bold mb-10"
+        >
+          Our Works
+        </motion.h2>
 
-      {/* Grid of cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-        {works.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
-            animate={
-              activeItem?.title === item.title
-                ? { rotateY: 90, opacity: 0 }
-                : { rotateY: 0, opacity: 1 }
-            }
-            transition={{
-              duration: 0.6,
-              ease: [0.4, 0, 0.2, 1],
-              delay: index * 0.15,
-            }}
-            viewport={{ once: true, amount: 0.3 }}
-            className="relative group overflow-hidden rounded-xl shadow-md cursor-pointer"
-            onClick={() => setActiveItem(item)}
-            style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-          >
-            <img
-              src={item.img}
-              alt={item.title}
-              className="h-64 w-full object-cover group-hover:brightness-110 transition-all duration-300"
-            />
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-2xl font-bold">
-              {item.title}
-            </div>
-          </motion.div>
-        ))}
-      </div>
+        {/* Grid of cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+          {works.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05 }}
+              animate={
+                activeItem?.title === item.title
+                  ? { rotateY: 90, opacity: 0 }
+                  : { rotateY: 0, opacity: 1 }
+              }
+              transition={{
+                // Initial animation with delay
+                opacity: { duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: index * 0.15 },
+                y: { duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: index * 0.15 },
+                // Flip animation without delay
+                rotateY: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+                scale: { duration: 0.2 }
+              }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="relative group overflow-hidden rounded-xl shadow-md cursor-pointer"
+              onClick={() => setActiveItem(item)}
+              style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
+            >
+              <img
+                src={item.img}
+                alt={item.title}
+                className="h-64 w-full object-cover group-hover:brightness-110 transition-all duration-300"
+              />
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-2xl font-bold">
+                {item.title}
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-      {/* Explore Button */}
-      <motion.button
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        whileHover={{ scale: 0.96 }}
-        className="mt-12 inline-flex items-center justify-center h-[45px] px-6 py-3 rounded-full font-semibold text-white bg-black leading-none cursor-pointer"
-      >
-        Explore More Works <span className="pl-2"><img src={topRight} alt="" width={12} style={{ filter: "invert(1)"}}/></span>
-      </motion.button>
+        {/* Explore Button - moved outside to prevent remounting */}
+        <MotionLink
+          to="/portfolio"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          whileHover={{ scale: 0.96 }}
+          className="mt-12 inline-flex items-center justify-center h-[45px] px-6 py-3 rounded-full font-semibold text-white bg-black leading-none cursor-pointer"
+        >
+          Explore More Works <span className="pl-2"><img src={topRight} alt="" width={12} style={{ filter: "invert(1)" }} /></span>
+        </MotionLink>
+      </section>
 
-      {/* Modal */}
+      {/* Modal - moved outside section to prevent remounting */}
       <AnimatePresence>
         {activeItem && (
           <>
@@ -220,11 +253,15 @@ export default function App() {
                 transformStyle: "preserve-3d",
                 perspective: "1000px",
               }}
+              onClick={() => setActiveItem(null)}
             >
-              <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg relative overflow-hidden">
+              <motion.div 
+                className="w-full max-w-2xl bg-white rounded-xl shadow-lg relative overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <motion.button
                   onClick={() => setActiveItem(null)}
-                  className="absolute top-4 right-4 p-2 rounded-lg bg-black/30 hover:bg-black/50 transition-colors duration-200"
+                  className="absolute top-4 right-4 p-2 rounded-lg bg-black/30 hover:bg-black/50 transition-colors duration-200 z-10"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -245,40 +282,77 @@ export default function App() {
                     We captured timeless moments with precision and artistry.
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </section>
 
       {/* SECTION 5: TESTIMONIALS (Animates on Scroll) */}
       <section className="py-16 bg-white text-center mb-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="text-3xl font-bold mb-10"
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+        className="text-3xl font-bold mb-10"
+      >
+        Discover what our clients say
+      </motion.h2>
+
+      <div className="relative max-w-6xl mx-auto">
+        <div
+          ref={scrollRef}
+          className="flex gap-6 px-4 overflow-x-auto pb-4 scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          Discover what our clients say
-        </motion.h2>
-        <div className="flex gap-6 px-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {[1, 2, 3, 4].map((testimonial, index) => (
+          {testimonials.map((item, index) => (
             <motion.div
-              key={testimonial}
+              key={item.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
-              className="min-w-[300px] bg-gray-100 rounded-xl p-6 shadow-md"
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: index * 0.1,
+              }}
+              className="min-w-[250px] bg-gray-100 rounded-xl p-6 shadow-md flex flex-col items-center h-[280px]"
             >
-              <p className="italic text-gray-700">"They made our wedding day so special! Highly recommend."</p>
-              <h4 className="mt-4 font-semibold">– Client Name</h4>
+              <img
+                src={item.img}
+                alt={item.name}
+                className="w-20 h-20 rounded-full object-cover mb-4"
+              />
+              <h4 className="font-semibold mb-2">{item.name}</h4>
+              <p className="italic text-gray-700 text-sm">{item.feedback}</p>
             </motion.div>
           ))}
         </div>
-      </section>
+
+        {/* Navigation Buttons */}
+        <div className="flex justify-center gap-6 mt-6">
+          <motion.button
+          whileHover={{ background: "#1e293b"}}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => scroll("left")}
+            className="p-3 bg-black rounded-full cursor-pointer"
+          >
+            <FaArrowLeft className="text-white" />
+          </motion.button>
+          <motion.button
+            whileHover={{ background: "#1e293b"}}
+            whileTap={{ scale: 0.92 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => scroll("right")}
+            className="p-3 bg-black rounded-full cursor-pointer"
+          >
+            <FaArrowRight className="text-white" />
+          </motion.button>
+        </div>
+      </div>
+    </section>
 
       <Footer/>
     </div>

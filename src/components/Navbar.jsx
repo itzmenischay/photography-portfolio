@@ -35,13 +35,6 @@ const Navbar = () => {
             before:-translate-x-1/2 before:w-[60%] before:h-[1px] before:bg-white 
             before:scale-x-0 before:origin-center before:transition-transform before:duration-300 
             hover:before:scale-x-100">
-            <Link to="/whyus">Why us?</Link>
-          </li>
-          <li className="relative px-6 cursor-pointer
-            before:content-[''] before:absolute before:-bottom-[6px] before:left-1/2 
-            before:-translate-x-1/2 before:w-[60%] before:h-[1px] before:bg-white 
-            before:scale-x-0 before:origin-center before:transition-transform before:duration-300 
-            hover:before:scale-x-100">
             <Link to="/portfolio">Portfolio</Link>
           </li>
           <li className="relative px-6 cursor-pointer

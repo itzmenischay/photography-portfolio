@@ -185,6 +185,53 @@ export default function About() {
         </motion.div>
       </section>
 
+      <section className="max-w-7xl mx-auto py-20 px-6 overflow-x-hidden">
+        {/* The parent grid is now the main motion component that triggers the animation */}
+        <motion.div 
+          className="grid md:grid-cols-12 gap-8 items-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ staggerChildren: 0 }} // Ensures children animate simultaneously
+        >
+          {/* Left Column: It now inherits the animation trigger from its parent */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: -50 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } }
+            }}
+            className="md:col-span-7 grid grid-cols-2 grid-rows-2 gap-4 h-[550px]"
+          >
+            <img src={bride2} alt="Emotional Moments" className="rounded-xl object-cover h-full w-full" />
+            <img src={bts2} alt="Wedding Moments" className="rounded-xl object-cover h-full w-full" />
+            <img src={candid2} alt="Smiles and laughter" className="rounded-xl object-cover h-full w-full" />
+            <img src={bride1} alt="Emotional Moments" className="rounded-xl object-cover h-full w-full" />
+          </motion.div>
+
+          {/* Right Column: It also inherits the same trigger */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: 50 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } }
+            }}
+            className="md:col-span-5 flex flex-col justify-center space-y-6 text-left"
+          >
+            <h2 className="text-5xl md:text-6xl font-bold">
+              Why Choose Our Vision?
+            </h2>
+            <p className="text-lg leading-relaxed">
+              It's more than just photos; it’s about capturing the soul of your story. We pour our passion and dedication into every single frame, ensuring your memories are not just seen, but deeply felt for years to come.
+            </p>
+            <p className="text-lg leading-relaxed">
+              With years of experience across India, we blend artistic storytelling with technical excellence. Our team is committed to a seamless and personal experience, delivering cinematic quality that truly reflects who you are.
+            </p>
+            <p className="text-lg leading-relaxed">
+              Let us show you why countless couples have trusted us to turn their moments into timeless masterpieces.
+            </p>
+          </motion.div>
+        </motion.div>
+      </section>
+
       {/* Meet our team section */}
         <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 text-center mb-10">

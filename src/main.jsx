@@ -6,7 +6,6 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 // Component imports
 import App from './App.jsx'
 import AboutUs from './components/AboutUs.jsx'
-import WhyUs from './components/WhyUs.jsx'
 import Portfolio from './components/Portfolio.jsx'
 import Services from './components/Services.jsx'
 import ContactUs from './components/ContactUs.jsx'
@@ -40,10 +39,6 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutUs/>
-      },
-      {
-        path: "/whyus",
-        element: <WhyUs/>
       },
       {
         path: "/portfolio",
